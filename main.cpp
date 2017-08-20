@@ -108,13 +108,13 @@ int main() {
     graph.decreaseEdge(1, -3);
     graph.decreaseEdge(-1, -4);
 
-    //Get Edges Cost
+    //Print
     std::cout << std::endl <<  "After decrease costs:" << std::endl;
     graph.printEdges();
     /* --------- End -------- */
 
 
-    //* --- Delete Node Test -- */
+    //* --- Delete Edge Test -- */
     //Normal
     graph.deleteEdge(0,1);
     graph.deleteEdge(3,4);
@@ -135,14 +135,65 @@ int main() {
     graph.deleteEdge(1,-1);
     graph.deleteEdge(-1,-1);
 
-    //Get Edges Cost
-    std::cout << std::endl <<  "After delete costs:" << std::endl;
+    //Print
+    std::cout << std::endl <<  "After delete edge costs:" << std::endl;
     graph.printEdges();
     /* --------- End -------- */
+
+    /* --- Delete Node Test -- */
+    //Normal
+    graph.deleteNode(3);
+
+    //Tries index out of bounds
+    graph.deleteNode(10);
+    graph.deleteNode(-1);
+
+    //Print
+    std::cout << std::endl <<  "After delete node costs:" << std::endl;
+    graph.printEdges();
+    /* --------- End -------- */
+
+    /* --- Random Tests -- */
+    graph.increaseEdge(2, 3);
+    graph.increaseEdge(3, 3);
+    graph.decreaseEdge(0, 3);
+    graph.increaseEdge(1, 3);
+    graph.insertNode();
+    graph.insertNode();
+    graph.increaseEdge(2, 0);
+    graph.decreaseEdge(0, 1);
+    graph.increaseEdge(0, 3);
+    graph.increaseEdge(0, 4);
+    graph.decreaseEdge(3, 2);
+    graph.insertEdge(0, 5);
+    graph.increaseEdge(0, 5);
+    graph.increaseEdge(0, 5);
+    graph.increaseEdge(0, 5);
+    graph.increaseEdge(0, 5);
+    graph.insertNode();
+    graph.insertEdge(3, 4);
+    graph.increaseEdge(3, 4);
+    graph.increaseEdge(3, 4);
+    graph.decreaseEdge(3, 1);
+    graph.insertEdge(2, 0);
+    graph.increaseEdge(2, 0);
+    graph.insertEdge(4, 0);
+    graph.increaseEdge(4, 0);
+    graph.increaseEdge(4, 0);
+    graph.increaseEdge(4, 0);
+    graph.deleteNode(6);
+    graph.decreaseEdge(0, 1);
+
+    //Print
+    std::cout << std::endl <<  "After random operations:" << std::endl;
+    graph.printEdges();
+    /* --------- End -------- */
+
 
 //
 //    if (!)
 //        std::cout << "AE" << std::endl;
+
 
     return 0;
 }
