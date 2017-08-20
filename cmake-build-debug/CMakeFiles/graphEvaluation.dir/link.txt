@@ -1,0 +1,1 @@
+/usr/bin/c++   -g   CMakeFiles/graphEvaluation.dir/main.cpp.o CMakeFiles/graphEvaluation.dir/Graph.cpp.o  -o graphEvaluation 
