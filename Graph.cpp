@@ -63,7 +63,10 @@ bool Graph::deleteNode(int n) {
 
 bool Graph::deleteEdge(int n1, int n2) {
     //Safety Checks
-    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0)
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2)
+        return false;
+
+    if (edges[n1][n2] < 1)
         return false;
 
     edges[n1][n2] = 0;
@@ -74,7 +77,7 @@ bool Graph::deleteEdge(int n1, int n2) {
 //Costs
 bool Graph::increaseEdge(int n1, int n2) {
     //Safety Checks
-    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0)
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2)
         return false;
 
     //Cant insert
@@ -88,7 +91,7 @@ bool Graph::increaseEdge(int n1, int n2) {
 
 bool Graph::decreaseEdge(int n1, int n2) {
     //Safety Checks
-    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0)
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2)
         return false;
 
     //Cant delete
