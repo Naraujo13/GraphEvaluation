@@ -2,8 +2,8 @@
 // Created by naraujo on 20/08/17.
 //
 
-#ifndef GRAPHEVALUATION_GRAPH_HPP
-#define GRAPHEVALUATION_GRAPH_HPP
+#ifndef GRAPHEVALUATION_ATOMICGRAPH_HPP
+#define GRAPHEVALUATION_ATOMICGRAPH_HPP
 
 #include <vector>
 #include <iostream>
@@ -75,4 +75,4 @@ public:
 
 };
 
-#endif //GRAPHEVALUATION_GRAPH_HPP
+#endif //GRAPHEVALUATION_ATOMICGRAPH_HPP
