@@ -10,11 +10,18 @@
 #include <mutex>
 #include <shared_mutex>
 
+struct shared_mutex_wrapper : std::shared_timed_mutex
+{
+    shared_mutex_wrapper() = default;
+    shared_mutex_wrapper(shared_mutex_wrapper const&) noexcept : std::shared_timed_mutex() {}
+    bool operator==(shared_mutex_wrapper const&other) noexcept { return this==&other; }
+};
+
 class GraphSharedMutex : public Graph{
 private:
 
     //Normal
-    std::vector<std::shared_timed_mutex> nodesMutex;
+    std::vector<shared_mutex_wrapper> nodesMutex;
 
     //Insertion
     std::shared_timed_mutex structureMutex;

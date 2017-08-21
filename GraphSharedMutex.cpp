@@ -25,6 +25,7 @@ bool GraphSharedMutex::insertNode() {
     //Insert Node
     nodes.push_back(1);
     edges.push_back(newNodeEdges);
+    nodesMutex.push_back(shared_mutex_wrapper());
 
     structureMutex.unlock();
 
@@ -36,8 +37,10 @@ bool GraphSharedMutex::insertEdge(int n1, int n2) {
 
     structureMutex.lock_shared();
     //Safety Checks
-    if (n1 > edges.size() || n2 > edges[n1].size())
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2) {
+        structureMutex.unlock_shared();
         return false;
+    }
     structureMutex.unlock_shared();
 
     nodesMutex[n1].lock();
@@ -61,8 +64,10 @@ bool GraphSharedMutex::insertEdge(int n1, int n2) {
 bool GraphSharedMutex::deleteNode(int n) {
 
     structureMutex.lock_shared();
-    if (n > nodes.size() || n < 0)
+    if (n > nodes.size() || n < 0) {
+        structureMutex.unlock_shared();
         return false;
+    }
     structureMutex.unlock_shared();
 
     structureMutex.lock();
@@ -82,14 +87,18 @@ bool GraphSharedMutex::deleteNode(int n) {
     structureMutex.unlock();
     nodesMutex[n].unlock();
 
+    nodesMutex.pop_back();
+
     return true;
 }
 
 bool GraphSharedMutex::deleteEdge(int n1, int n2) {
     //Safety Checks
     structureMutex.lock_shared();
-    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2)
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2) {
+        structureMutex.unlock_shared();
         return false;
+    }
     structureMutex.unlock_shared();
 
     nodesMutex[n1].lock();
@@ -112,8 +121,10 @@ bool GraphSharedMutex::deleteEdge(int n1, int n2) {
 bool GraphSharedMutex::increaseEdge(int n1, int n2) {
     //Safety Checks
     structureMutex.lock_shared();
-    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2)
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2) {
+        structureMutex.unlock_shared();
         return false;
+    }
     structureMutex.unlock_shared();
 
     nodesMutex[n1].lock();
@@ -136,8 +147,10 @@ bool GraphSharedMutex::increaseEdge(int n1, int n2) {
 bool GraphSharedMutex::decreaseEdge(int n1, int n2) {
     //Safety Checks
     structureMutex.lock_shared();
-    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2)
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2) {
+        structureMutex.unlock_shared();
         return false;
+    }
     structureMutex.unlock_shared();
 
     nodesMutex[n1].lock();
@@ -150,9 +163,9 @@ bool GraphSharedMutex::decreaseEdge(int n1, int n2) {
         return false;
     }
 
+    edges[n1][n2]--;
     nodesMutex[n1].unlock();
     nodesMutex[n2].unlock();
-    edges[n1][n2]--;
 
     return true;
 }
@@ -161,8 +174,10 @@ bool GraphSharedMutex::decreaseEdge(int n1, int n2) {
 bool GraphSharedMutex::getEdge(int n1, int n2, int& out){
     //Safety Checks
     structureMutex.lock_shared();
-    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0)
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0) {
+        structureMutex.unlock_shared();
         return false;
+    }
     structureMutex.unlock_shared();
 
     nodesMutex[n1].lock_shared();
@@ -179,8 +194,10 @@ bool GraphSharedMutex::getEdge(int n1, int n2, int& out){
 
 bool GraphSharedMutex::getNode(int n, int& out){
     structureMutex.lock_shared();
-    if (n > nodes.size() || n < 0)
+    if (n > nodes.size() || n < 0) {
+        structureMutex.unlock_shared();
         return false;
+    }
     structureMutex.unlock_shared();
 
     nodesMutex[n].lock_shared();
@@ -213,5 +230,7 @@ void GraphSharedMutex::printEdges() {
         nodesMutex[i].unlock_shared();
     }
     std::cout << "--------------- END ---------------" << std::endl;
+
+    structureMutex.unlock_shared();
 }
 

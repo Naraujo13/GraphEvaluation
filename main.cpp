@@ -189,6 +189,7 @@ int main() {
     //Print
     std::cout << std::endl <<  "After random operations:" << std::endl;
     graph.printEdges();
+
     /* --------- End -------- */
 
 
