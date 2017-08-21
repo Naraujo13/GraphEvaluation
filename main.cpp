@@ -1,9 +1,10 @@
 #include <iostream>
 #include "Graph.hpp"
 #include "GraphMutex.hpp"
+#include "GraphSharedMutex.hpp"
 
 int main() {
-    GraphMutex graph;
+    GraphSharedMutex graph;
 
     /* --- Insertion Test -- */
     //Insert Nodes
