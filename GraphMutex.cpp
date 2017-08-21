@@ -161,3 +161,26 @@ bool GraphMutex::getNode(int n, int& out){
     return true;
 }
 
+
+void GraphMutex::printEdges() {
+
+    std::lock_guard<std::mutex> structureGuard(structureMutex);
+
+    std::cout << "Printing Edges..." << std::endl;
+    std::cout << "-------------- START --------------" << std::endl;
+    for (int i = 0; i < edges.size(); i++){
+        nodesMutex[i].lock();
+        std::cout << "| ";
+        for (int j = 0; j < edges[i].size(); j++) {
+            if (i != j)
+                nodesMutex[j].lock();
+            std::cout << "(" << edges[i][j] << ") | ";
+            if (i != j)
+                nodesMutex[j].unlock();
+        }
+        std::cout << std::endl;
+        nodesMutex[i].unlock();
+    }
+    std::cout << "--------------- END ---------------" << std::endl;
+}
+

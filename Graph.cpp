@@ -123,3 +123,15 @@ bool Graph::getNode(int n, int& out){
 
     return true;
 }
+
+void Graph::printEdges() {
+    std::cout << "Printing Edges..." << std::endl;
+    std::cout << "-------------- START --------------" << std::endl;
+    for (int i = 0; i < edges.size(); i++){
+        std::cout << "| ";
+        for (int j = 0; j < edges[i].size(); j++)
+            std::cout << "(" << edges[i][j] << ") | ";
+        std::cout << std::endl;
+    }
+    std::cout << "--------------- END ---------------" << std::endl;
+}

@@ -38,6 +38,8 @@ public:
     bool getNode(int n, int& out);
     bool getEdge(int n1, int n2, int& out);
 
+    void printEdges();
+
 };
 
 #endif //GRAPHEVALUATION_GRAPHMUTEX_HPP
