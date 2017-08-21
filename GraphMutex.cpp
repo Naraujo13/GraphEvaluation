@@ -35,8 +35,10 @@ bool GraphMutex::insertEdge(int n1, int n2) {
 
     structureMutex.lock();
     //Safety Checks
-    if (n1 > edges.size() || n2 > edges[n1].size())
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2) {
+        structureMutex.unlock();
         return false;
+    }
     structureMutex.unlock();
 
     std::lock_guard<std::mutex>n1Guard(nodesMutex[n1]);
@@ -55,8 +57,10 @@ bool GraphMutex::insertEdge(int n1, int n2) {
 bool GraphMutex::deleteNode(int n) {
 
     structureMutex.lock();
-    if (n > nodes.size() || n < 0)
+    if (n > nodes.size() || n < 0) {
+        structureMutex.unlock();
         return false;
+    }
     structureMutex.unlock();
 
     std::lock_guard<std::mutex>structureGuard(structureMutex);
@@ -82,8 +86,10 @@ bool GraphMutex::deleteNode(int n) {
 bool GraphMutex::deleteEdge(int n1, int n2) {
     //Safety Checks
     structureMutex.lock();
-    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2)
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2) {
+        structureMutex.unlock();
         return false;
+    }
     structureMutex.unlock();
 
     std::lock_guard<std::mutex>n1Guard(nodesMutex[n1]);
@@ -101,8 +107,10 @@ bool GraphMutex::deleteEdge(int n1, int n2) {
 bool GraphMutex::increaseEdge(int n1, int n2) {
     //Safety Checks
     structureMutex.lock();
-    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2)
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2) {
+        structureMutex.unlock();
         return false;
+    }
     structureMutex.unlock();
 
     std::lock_guard<std::mutex>n1Guard(nodesMutex[n1]);
@@ -120,8 +128,10 @@ bool GraphMutex::increaseEdge(int n1, int n2) {
 bool GraphMutex::decreaseEdge(int n1, int n2) {
     //Safety Checks
     structureMutex.lock();
-    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2)
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0 || n1 == n2) {
+        structureMutex.unlock();
         return false;
+    }
     structureMutex.unlock();
 
     std::lock_guard<std::mutex>n1Guard(nodesMutex[n1]);
@@ -140,8 +150,10 @@ bool GraphMutex::decreaseEdge(int n1, int n2) {
 bool GraphMutex::getEdge(int n1, int n2, int& out){
     //Safety Checks
     structureMutex.lock();
-    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0)
+    if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0) {
+        structureMutex.unlock();
         return false;
+    }
     structureMutex.unlock();
 
     std::lock_guard<std::mutex>n1Guard(nodesMutex[n1]);
@@ -155,8 +167,10 @@ bool GraphMutex::getEdge(int n1, int n2, int& out){
 
 bool GraphMutex::getNode(int n, int& out){
     structureMutex.lock();
-    if (n > nodes.size() || n < 0)
+    if (n > nodes.size() || n < 0) {
+        structureMutex.unlock();
         return false;
+    }
     structureMutex.unlock();
 
     std::lock_guard<std::mutex>nodeGuard(nodesMutex[n]);
