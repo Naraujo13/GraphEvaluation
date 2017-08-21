@@ -4,7 +4,7 @@
 #include "GraphSharedMutex.hpp"
 
 int main() {
-    GraphSharedMutex graph;
+    GraphMutex graph;
 
     /* --- Insertion Test -- */
     //Insert Nodes

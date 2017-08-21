@@ -26,6 +26,8 @@ bool GraphMutex::insertNode() {
     nodes.push_back(1);
     edges.push_back(newNodeEdges);
 
+    nodesMutex.push_back(mutex_wrapper());
+
     return true;
 }
 
@@ -70,6 +72,9 @@ bool GraphMutex::deleteNode(int n) {
 
     //Delete Node
     nodes.erase(nodes.begin() + n);
+
+    //Mutex
+    nodesMutex.pop_back();
 
     return true;
 }

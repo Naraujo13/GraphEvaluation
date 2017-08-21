@@ -8,12 +8,20 @@
 #include "Graph.hpp"
 #include <thread>
 #include <mutex>
+#include <deque>
+
+struct mutex_wrapper : std::mutex
+{
+    mutex_wrapper() = default;
+    mutex_wrapper(mutex_wrapper const&) noexcept : std::mutex() {}
+    bool operator==(mutex_wrapper const&other) noexcept { return this==&other; }
+};
 
 class GraphMutex : public Graph{
-private:
+public:
 
     //Normal
-    std::vector<std::mutex> nodesMutex;
+    std::deque<mutex_wrapper> nodesMutex;
 
     //Insertion
     std::mutex structureMutex;
