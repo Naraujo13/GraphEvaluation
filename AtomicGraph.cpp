@@ -88,6 +88,7 @@ bool AtomicGraph::deleteEdge(int n1, int n2) {
 
 //Costs
 bool AtomicGraph::increaseEdge(int n1, int n2) {
+
     //Safety Checks
     if (n1 > edges.size() || n2 > edges[n1].size() || n1 < 0 || n2 < 0)
         return false;
@@ -96,9 +97,7 @@ bool AtomicGraph::increaseEdge(int n1, int n2) {
     if (edges[n1][n2]._a < 1)
         return false;
     else
-        edges[n1][n2]._a++;
-    //std::atomic_fetch_add(&edges[n1][n2],1)
-    std::vector<std::atomic<int>> oi;
+        edges[n1][n2]._a.operator++();
 
     return true;
 }
@@ -112,7 +111,7 @@ bool AtomicGraph::decreaseEdge(int n1, int n2) {
     if (edges[n1][n2]._a <= 1)
         return false;
 
-    edges[n1][n2]._a--;
+    edges[n1][n2]._a.operator--();
 
     return true;
 }
