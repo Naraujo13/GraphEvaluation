@@ -1,8 +1,9 @@
 #include <iostream>
 #include "Graph.hpp"
+#include "GraphMutex.hpp"
 
 int main() {
-    Graph graph;
+    GraphMutex graph;
 
     /* --- Insertion Test -- */
     //Insert Nodes

@@ -9,7 +9,7 @@
 #include <iostream>
 
 class Graph{
-private:
+public:
     std::vector<int> nodes;
     std::vector< std::vector<int> > edges;
 
